@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class MainPanel extends JPanel{
-    public static ArrayListDownloadBoxes arrayListDownloadBoxes;
-    public MainPanel()
+    MainDownloadPanel mainDownloadPanel;
+    public MainPanel(JPanel mainDownloadPanel)
     {
-        arrayListDownloadBoxes = new ArrayListDownloadBoxes();
-        GridLayout layout = new GridLayout(4,1);
+        BorderLayout layout = new BorderLayout();
         this.setLayout(layout);
 
-
+        this.add(mainDownloadPanel,BorderLayout.NORTH);
     }
 }

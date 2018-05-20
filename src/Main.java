@@ -1,14 +1,91 @@
+/**
+ * This class is a Download manager
+ *
+ * @author hosein beheshti
+ * @version 0.2
+ */
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main {
 
-    static MainPanel mainPanel;
+    static ArrayListDownloadBoxes arrayListDownloadBoxes;
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("JDM");
-        frame.setLocation(800,400);
+        frame.setLocation(450,200);
         frame.setSize(800,700);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        ImageIcon imageIcon = new ImageIcon("frame.png");
+        frame.setIconImage(imageIcon.getImage());
+
+//look and feel
+     /*   try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+
+        } catch(Exception e){
+
+        }
+
+*/
+
+
+
+
+        //System tray
+        if(!SystemTray.isSupported()){
+            System.out.println("System tray is not supported !!! ");
+            return ;
+        }
+        //get the systemTray of the system
+        SystemTray systemTray = SystemTray.getSystemTray();
+
+        //get default toolkit
+        //Toolkit toolkit = Toolkit.getDefaultToolkit();
+        //get image
+        //Toolkit.getDefaultToolkit().getImage("src/resources/busylogo.jpg");
+        Image image = Toolkit.getDefaultToolkit().getImage("add.png");
+
+        //popupmenu
+        PopupMenu trayPopupMenu = new PopupMenu();
+
+        //1t menuitem for popupmenu
+        MenuItem action = new MenuItem("Action");
+        action.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(true);
+            }
+        });
+        trayPopupMenu.add(action);
+
+        //2nd menuitem of popupmenu
+        MenuItem close = new MenuItem("Close");
+        close.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        trayPopupMenu.add(close);
+
+        //setting tray icon
+        TrayIcon trayIcon = new TrayIcon(image, "SystemTray Demo", trayPopupMenu);
+        //adjust to default size as per system recommendation
+        trayIcon.setImageAutoSize(true);
+
+        try{
+            systemTray.add(trayIcon);
+        }catch(AWTException awtException){
+            awtException.printStackTrace();
+        }
+        //***************end system tray
+
 
         BorderLayout layout = new BorderLayout();
         frame.setLayout(layout);
@@ -16,20 +93,32 @@ public class Main {
 
         //  frame.add(new JPanel(),BorderLayout.NORTH);
 
-        Categories categories = new Categories();
-        categories.setBackground(Color.gray);
-        //menuPanel.setSize(100,100);
-        frame.add(categories,BorderLayout.WEST);
+
 
         MenuPanel menuPanel = new MenuPanel();
        // menuPanel.setBackground(Color.black);
         frame.add(menuPanel,BorderLayout.NORTH);
 
-         mainPanel = new MainPanel();
-       // mainPanel.setBackground(Color.blue);
-        frame.add(mainPanel);
+        MainDownloadPanel mainDownloadPanel = new MainDownloadPanel();
+        MainPanel mainPanel = new MainPanel(mainDownloadPanel);
+        JScrollPane scroll = new JScrollPane(mainPanel);
+        frame.add(scroll,BorderLayout.CENTER);
 
-       // frame.setBackground(Color.red);
+       // mainPanel.setBackground(new Color(50,50,50));
+       // mainDownloadPanel.setBackground(new Color(50,50,50));
+
+        Categories categories = new Categories(mainDownloadPanel);
+        categories.setBackground(new Color(78,0,0));        //menuPanel.setSize(100,100);
+        frame.add(categories,BorderLayout.WEST);
+      //  mainPanel.add(b1);
+       // mainPanel.setBackground(Color.blue);
+
+        arrayListDownloadBoxes = new ArrayListDownloadBoxes(mainDownloadPanel);
+
+
+        // frame.setBackground(Color.red);
+
+
         frame.setVisible(true);
 
 

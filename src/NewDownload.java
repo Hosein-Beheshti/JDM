@@ -1,69 +1,88 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-
-/*public class NewDownload extends JFrame {
-
-    NewDownloadPanels nWPanels;
-    GridLayout layout;
-    JButton ok;
-    public NewDownload()
-    {
-        layout = new GridLayout(3,3);
-        this.setLayout(layout);
-
-        nWPanels = new NewDownloadPanels();
-        this.add(nWPanels);
-        ok = new JButton("OK");
-        this.add(ok);
-    }
-    public class NewDownloadPanels extends JPanel
-    {
-        GridLayout layout;
-        JTextField name;
-        JTextField url;
-        public NewDownloadPanels()
-        {
-            layout = new GridLayout(2,1);
-            this.setLayout(layout);
-            name = new JTextField("Enter here");
-            name.setPreferredSize(new Dimension(1000,20));
-            this.add(name);
-        }
-    }
-}*/
+import java.awt.event.*;
 
 public class NewDownload{
-    MainPanel mainPanel;
-    JTextField name = new JTextField();
-    JTextField address = new JTextField();
-   private String fileName;
-   private String fileAdress;
-    JPanel myPanel;
-    GridLayout layout;
-        public NewDownload(){
+    private MainPanel mainPanel;
+    private JTextField name;
+    private JTextField address;
+    private String fileName;
+    private String fileAdress;
+    private JPanel myPanel;
+    private GridLayout layout;
+    private JRadioButton automaticallyDownloadButton;
+    private JRadioButton queueDownloadButton;
+
+    public NewDownload(){
          myPanel = new JPanel();
-         layout = new GridLayout(2,2,2,12);
+         layout = new GridLayout(3,3,2,12);
          myPanel.setLayout(layout);
+
+            name = new JTextField();
+            address = new JTextField();
 
             myPanel.add(new JLabel("Name :"));
             myPanel.add(name);
            // myPanel.add(Box.createHorizontalStrut(150)); // a spacer
             myPanel.add(new JLabel("Adress :"));
             myPanel.add(address);
+
+            automaticallyDownloadButton = new JRadioButton("Automatically");
+            queueDownloadButton = new JRadioButton("Queue");
+
+            automaticallyDownloadButton.setSelected(true);
+
+            ButtonGroup group = new ButtonGroup();
+            group.add(automaticallyDownloadButton);
+            group.add(queueDownloadButton);
+
+            myPanel.add(automaticallyDownloadButton);
+            myPanel.add(queueDownloadButton);
+
             int result = JOptionPane.showConfirmDialog(null, myPanel,
                     "Please Enter Name and Adress", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
                         fileName = name.getText();
                         fileAdress = address.getText();
                         DownloadsPanel downloadsPanel = new DownloadsPanel(fileName);
-                        MainPanel.arrayListDownloadBoxes.add(downloadsPanel);
-//                        Main.mainPanel.addBoxes();
+                        //add ActionListener for all Downloadspanel when click on thats
+
+                downloadsPanel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                       // downloadsPanel.
+
+                        if(e.isMetaDown())
+                        {
+                            String about = "URL : " + fileAdress + "\n" +
+                                            "Save File Adress : " + Setting.getSaveFileAdress() + "\n" +
+                                            "Size : " + "xxx" + "\n" +
+                                            "Start Time : " + "xxx";
+                            System.out.println("salam");
+                            JOptionPane.showConfirmDialog(null, about,
+                                    "File Information", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+                        }
+
+                        else
+                            {
+                            if (downloadsPanel.isSelect() == false) {
+                                downloadsPanel.setSelect(true);
+                                downloadsPanel.setBackground(Color.lightGray);
+                               // downloadsPanel..setBackground(Color.lightGray);
+
+                            } else {
+                                downloadsPanel.setSelect(false);
+                                downloadsPanel.setBackground(null);
+
+                            }
+                        }
+                        //System.out.println(e.getSource());
+                    }
+                });
+                        Main.arrayListDownloadBoxes.getDownloadBoxes().add(downloadsPanel);
+                        Main.arrayListDownloadBoxes.addBoxes();
+//                       Main.mainPanel.addBoxes();
             }
         }
-
     public String getDownloadName() {
         return fileName;
     }

@@ -18,8 +18,7 @@ public class MenuBar extends JMenuBar {
 
     private JMenuItem about;
 
-    public MenuBar()
-    {
+    public MenuBar() {
         //new "downloads" that is a object of JMenu class
         downloads = new JMenu("Download");
         //set a suitable Mnemonic for downloads JMenu
@@ -34,6 +33,8 @@ public class MenuBar extends JMenuBar {
         //creat JMenu Items
         newDownload = new JMenuItem("New Download");
         newDownload.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));
+        newDownload.addActionListener(new toolbarHandler());
+
 
         pause = new JMenuItem("Pause");
         pause.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, Event.CTRL_MASK));
@@ -46,15 +47,16 @@ public class MenuBar extends JMenuBar {
 
         remove = new JMenuItem("Remove");
         remove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, Event.CTRL_MASK));
+        remove.addActionListener(new toolbarHandler());
 
         setting = new JMenuItem("Setting");
         setting.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
+        setting.addActionListener(new toolbarHandler());
 
         exit = new JMenuItem("Exit");
         exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, Event.CTRL_MASK));
-        exit .addActionListener(new toolbarHandler());
+        exit.addActionListener(new toolbarHandler());
 
-        newDownload.addActionListener(new toolbarHandler());
 
         //add Items to downloads JMenu
         downloads.add(newDownload);
@@ -72,24 +74,29 @@ public class MenuBar extends JMenuBar {
         help.add(about);
 
     }
+
     public class toolbarHandler implements ActionListener {
 
-        public void actionPerformed (ActionEvent e)
-        {
-            if(e.getActionCommand().equals("Exit"))
+        public void actionPerformed(ActionEvent e) {
+            if (e.getActionCommand().equals("Exit"))
                 System.exit(0);
-            if(e.getActionCommand().equals("New Download"))
-            {
+            if (e.getActionCommand().equals("New Download")) {
                 NewDownload newDownload = new NewDownload();
-              //  ArrayListDownloadBoxes arrayListDownloadBoxes = new ArrayListDownloadBoxes(downloadsPanel);
+                //  ArrayListDownloadBoxes arrayListDownloadBoxes = new ArrayListDownloadBoxes(downloadsPanel);
             }
-            if (e.getActionCommand().equals("About"))
-            {
+            if (e.getActionCommand().equals("About")) {
                 String about = "programmer : Hosein Beheshti \n " +
                         "Student Number : 9631011";
                 System.out.println("salam");
-              JOptionPane.showConfirmDialog(null,about,
-                        "About",JOptionPane.DEFAULT_OPTION,JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showConfirmDialog(null, about,
+                        "About", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+            }
+            if (e.getActionCommand().equals("Setting")) {
+                Setting setting = new Setting();
+            }
+            if(e.getActionCommand().equals("Remove"))
+            {
+                Main.arrayListDownloadBoxes.remove();
             }
         }
     }
