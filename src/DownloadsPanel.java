@@ -1,7 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 
-public class DownloadsPanel extends JPanel {
+public class DownloadsPanel extends JPanel implements Serializable{
 
     private FlowLayout layout;
     private JProgressBar progress;
@@ -24,7 +25,7 @@ public class DownloadsPanel extends JPanel {
         this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         // this.setBackground(new Color(100,100,100));
 
-        downloadIcon = new ImageIcon("downloadIcon.png");
+        downloadIcon = new ImageIcon("./Icons/downloadIcon.png");
         JLabel downloadLabel = new JLabel(downloadIcon);
         this.add(downloadLabel);
 
@@ -36,7 +37,7 @@ public class DownloadsPanel extends JPanel {
         downloadPersent = new JLabel(String.valueOf(persent));
         this.add(downloadPersent);
 
-        downloadingIcon = new ImageIcon("downloading.png");
+        downloadingIcon = new ImageIcon("./Icons/downloading.png");
         downloading = new JLabel(downloadingIcon);
         this.add(downloading);
     }
@@ -95,9 +96,9 @@ public class DownloadsPanel extends JPanel {
                 //   SouthCenterDownloadsBoxPanels.setBackground(new Color(100,100,100));
 
 
-                resumeIcon = new ImageIcon("resume.png");
-                openFolderIcon = new ImageIcon("openfolder.png");
-                removeIcon = new ImageIcon("remove.png");
+                resumeIcon = new ImageIcon("./Icons/resume.png");
+                openFolderIcon = new ImageIcon("./Icons/openfolder.png");
+                removeIcon = new ImageIcon("./Icons/remove.png");
 
                 resumeButton = new JButton(resumeIcon);
                 openFolderButton = new JButton(openFolderIcon);

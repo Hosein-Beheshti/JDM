@@ -60,22 +60,29 @@ public class Setting {
                         /*UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
                         UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 */
+                        Main.lookAndFeel("Default");
             }
         });
         lookAndFeel2 = new JButton("Nimbus");
         lookAndFeel2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                        /*UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-                        UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-*/
+
+                Main.lookAndFeel("Nimbus");
                 }
         });
-        lookAndFeel3 = new JButton("");
+        lookAndFeel3 = new JButton("Windows Classic");
+        lookAndFeel3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.lookAndFeel("Windows Classic");
+            }
+        });
         lookAndFeel4 = new JButton("");
 
         lookAndFeel.add(lookAndFeel1);
         lookAndFeel.add(lookAndFeel2);
+        lookAndFeel.add(lookAndFeel3);
 
             tabbedPane = new JTabbedPane();
             tabbedPane.add("Limit Download", limitDownloadPanel);
@@ -90,7 +97,10 @@ public class Setting {
         public void actionPerformed(ActionEvent e)
         {
             if (e.getActionCommand().equals("save Adress"))
-                System.out.println("salam_");
+            {
+
+            }
+               // System.out.println("salam_");
         }
         }
 

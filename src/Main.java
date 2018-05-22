@@ -12,7 +12,29 @@ import java.awt.event.ActionListener;
 
 public class Main {
 
+    static SaveInformation saveInformation;
     static ArrayListDownloadBoxes arrayListDownloadBoxes;
+
+    static void lookAndFeel (String name)
+    {
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            if(name.equals("Nimbus"))
+                UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+            if (name.equals("Default"))
+                UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+            if(name.equals("Windows Classic"))
+                UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+
+                for(Window window : JFrame.getWindows())
+                {
+                    SwingUtilities.updateComponentTreeUI(window);
+                }
+        } catch(Exception e){
+
+        }
+    }
+
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("JDM");
@@ -20,7 +42,7 @@ public class Main {
         frame.setSize(800,700);
 
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        ImageIcon imageIcon = new ImageIcon("frame.png");
+        ImageIcon imageIcon = new ImageIcon("./Icons/frame.png");
         frame.setIconImage(imageIcon.getImage());
 
 //look and feel
@@ -35,7 +57,7 @@ public class Main {
 */
 
 
-
+/*
 
         //System tray
         if(!SystemTray.isSupported()){
@@ -49,7 +71,7 @@ public class Main {
         //Toolkit toolkit = Toolkit.getDefaultToolkit();
         //get image
         //Toolkit.getDefaultToolkit().getImage("src/resources/busylogo.jpg");
-        Image image = Toolkit.getDefaultToolkit().getImage("add.png");
+        Image image = Toolkit.getDefaultToolkit().getImage("frame.png");
 
         //popupmenu
         PopupMenu trayPopupMenu = new PopupMenu();
@@ -85,7 +107,7 @@ public class Main {
             awtException.printStackTrace();
         }
         //***************end system tray
-
+*/
 
         BorderLayout layout = new BorderLayout();
         frame.setLayout(layout);
@@ -114,7 +136,8 @@ public class Main {
        // mainPanel.setBackground(Color.blue);
 
         arrayListDownloadBoxes = new ArrayListDownloadBoxes(mainDownloadPanel);
-
+        saveInformation = new SaveInformation();
+       saveInformation.readDownloadPanels();
 
         // frame.setBackground(Color.red);
 

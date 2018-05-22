@@ -87,7 +87,7 @@ public class MenuBar extends JMenuBar {
             if (e.getActionCommand().equals("About")) {
                 String about = "programmer : Hosein Beheshti \n " +
                         "Student Number : 9631011";
-                System.out.println("salam");
+             //   System.out.println("salam");
                 JOptionPane.showConfirmDialog(null, about,
                         "About", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
             }

@@ -35,7 +35,7 @@ public class Categories extends JPanel {
             queues = new JButton("Queues");
            // def = new JButton("Default");
 
-        ImageIcon buttonBackground = new ImageIcon("ButtonBackground.jpg");
+        ImageIcon buttonBackground = new ImageIcon("./Icons/ButtonBackground.jpg");
         processing.setBackground(null);
         processing.setIcon(buttonBackground);
         processing.setHorizontalTextPosition(JButton.CENTER);
@@ -99,6 +99,12 @@ public class Categories extends JPanel {
         move.add(up);
         move.add(down);
 
-      //  this.add(move,BorderLayout.SOUTH);
+
+        queues.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+             //   this.add(move,BorderLayout.SOUTH);
+            }
+        });
     }
 }

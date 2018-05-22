@@ -1,6 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class NewDownload{
     private MainPanel mainPanel;
@@ -12,6 +16,7 @@ public class NewDownload{
     private GridLayout layout;
     private JRadioButton automaticallyDownloadButton;
     private JRadioButton queueDownloadButton;
+    private SaveInformation saveInformation;
 
     public NewDownload(){
          myPanel = new JPanel();
@@ -57,7 +62,7 @@ public class NewDownload{
                                             "Save File Adress : " + Setting.getSaveFileAdress() + "\n" +
                                             "Size : " + "xxx" + "\n" +
                                             "Start Time : " + "xxx";
-                            System.out.println("salam");
+                          //  System.out.println("salam");
                             JOptionPane.showConfirmDialog(null, about,
                                     "File Information", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
                         }
@@ -80,6 +85,13 @@ public class NewDownload{
                 });
                         Main.arrayListDownloadBoxes.getDownloadBoxes().add(downloadsPanel);
                         Main.arrayListDownloadBoxes.addBoxes();
+                        saveInformation.writeDownloadPanels(downloadsPanel);
+
+                if(queueDownloadButton.isSelected()) {
+                            Main.arrayListDownloadBoxes.getDownloadBoxesQueue().add(downloadsPanel);
+                            Main.arrayListDownloadBoxes.addBoxesToQueue();
+                        }
+                        Main.saveInformation.writeDownloadPanels(downloadsPanel);
 //                       Main.mainPanel.addBoxes();
             }
         }

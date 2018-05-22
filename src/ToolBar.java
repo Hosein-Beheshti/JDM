@@ -21,7 +21,7 @@ public class ToolBar extends JToolBar {
 
         GridLayout layout = new GridLayout();
         this.setLayout(new FlowLayout(0));
-        ImageIcon addicon = new ImageIcon("add.png");
+        ImageIcon addicon = new ImageIcon("./Icons/add.png");
         newDownload = new JButton(addicon);
         newDownload.setBackground(null);
         newDownload.setToolTipText("Add a new task");
@@ -32,15 +32,15 @@ public class ToolBar extends JToolBar {
             }
         });
 
-        ImageIcon pauseIcon = new ImageIcon("pause.png");
+        ImageIcon pauseIcon = new ImageIcon("./Icons/pause.png");
         pause = new JButton(pauseIcon);
         pause.setToolTipText("Pause");
 
-        ImageIcon resumeIcon = new ImageIcon("resume.png");
+        ImageIcon resumeIcon = new ImageIcon("./Icons/resume.png");
         resume = new JButton(resumeIcon);
         resume.setToolTipText("Resume");
 
-        ImageIcon removeIcon = new ImageIcon("remove.png");
+        ImageIcon removeIcon = new ImageIcon("./Icons/remove.png");
         remove = new JButton(removeIcon);
         remove.setToolTipText("Remove");
         remove.addActionListener(new ActionListener() {
@@ -50,11 +50,11 @@ public class ToolBar extends JToolBar {
             }
         });
 
-        ImageIcon cancelIcon = new ImageIcon("cancel.png");
+        ImageIcon cancelIcon = new ImageIcon("./Icons/cancel.png");
         cancel = new JButton(cancelIcon);
         cancel.setToolTipText("Cancel");
 
-        ImageIcon settingIcon = new ImageIcon("setting.png");
+        ImageIcon settingIcon = new ImageIcon("./Icons/setting.png");
         setting = new JButton(settingIcon);
         setting.setToolTipText("Setting");
         setting.addActionListener(new ActionListener() {
@@ -63,8 +63,9 @@ public class ToolBar extends JToolBar {
                 Setting setting = new Setting();
             }
         });
-        ImageIcon addToQueueIcon = new ImageIcon("queue.png");
+        ImageIcon addToQueueIcon = new ImageIcon("./Icons/queue.png");
         addToQueue = new JButton(addToQueueIcon);
+        addToQueue.setToolTipText("add to Queue");
         addToQueue.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -28,7 +28,7 @@ public class ArrayListDownloadBoxes {
                 mainDownloadPanel.increasRowa(downloadBoxes.size());
             }
             mainDownloadPanel.add(dP);
-            System.out.println(dP.isSelect());
+          //  System.out.println(dP.isSelect());
         }
         mainDownloadPanel.revalidate();
         mainDownloadPanel.repaint();
@@ -130,8 +130,6 @@ public class ArrayListDownloadBoxes {
             mainDownloadPanel.revalidate();
             mainDownloadPanel.repaint();
         }
-
-
     }
     public void swap(String task)
     {
@@ -147,7 +145,6 @@ public class ArrayListDownloadBoxes {
 //                i++;
 //            }
 //        }
-
             int i = 0;
            for(DownloadsPanel dp : downloadBoxesQueue)
            {
@@ -161,7 +158,6 @@ public class ArrayListDownloadBoxes {
                            Collections.swap(downloadBoxesQueue, i, (i - 1));
                            i--;
                        }
-
                }
                i++;
            }
