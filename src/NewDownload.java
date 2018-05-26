@@ -17,6 +17,7 @@ public class NewDownload{
     private JRadioButton automaticallyDownloadButton;
     private JRadioButton queueDownloadButton;
     private SaveInformation saveInformation;
+    private Information information;
 
     public NewDownload(){
          myPanel = new JPanel();
@@ -47,12 +48,16 @@ public class NewDownload{
             int result = JOptionPane.showConfirmDialog(null, myPanel,
                     "Please Enter Name and Adress", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
+                        information = new Information();
                         fileName = name.getText();
+                        information.setName(name.getText());
                         fileAdress = address.getText();
-                        DownloadsPanel downloadsPanel = new DownloadsPanel(fileName);
+                        information.setAdress(address.getText());
+                        Main.arrayListDownloadBoxes.getDownloadInformation().add(information);
+                        DownloadsPanel downloadsPanel = new DownloadsPanel(information.getName());
                         //add ActionListener for all Downloadspanel when click on thats
 
-                downloadsPanel.addMouseListener(new MouseAdapter() {
+                         downloadsPanel.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
                        // downloadsPanel.
 
@@ -73,7 +78,6 @@ public class NewDownload{
                                 downloadsPanel.setSelect(true);
                                 downloadsPanel.setBackground(Color.lightGray);
                                // downloadsPanel..setBackground(Color.lightGray);
-
                             } else {
                                 downloadsPanel.setSelect(false);
                                 downloadsPanel.setBackground(null);
@@ -85,13 +89,12 @@ public class NewDownload{
                 });
                         Main.arrayListDownloadBoxes.getDownloadBoxes().add(downloadsPanel);
                         Main.arrayListDownloadBoxes.addBoxes();
-                        saveInformation.writeDownloadPanels(downloadsPanel);
+                       // SaveInformation.writeDownloadPanels(downloadsPanel);
 
                 if(queueDownloadButton.isSelected()) {
                             Main.arrayListDownloadBoxes.getDownloadBoxesQueue().add(downloadsPanel);
                             Main.arrayListDownloadBoxes.addBoxesToQueue();
                         }
-                        Main.saveInformation.writeDownloadPanels(downloadsPanel);
 //                       Main.mainPanel.addBoxes();
             }
         }

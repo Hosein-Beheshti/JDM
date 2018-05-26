@@ -78,8 +78,11 @@ public class MenuBar extends JMenuBar {
     public class toolbarHandler implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            if (e.getActionCommand().equals("Exit"))
+            if (e.getActionCommand().equals("Exit")) {
+                SaveInformation saveInformation = new SaveInformation();
+                saveInformation.writeDownloadPanels(Main.arrayListDownloadBoxes.getDownloadInformation(),Main.arrayListDownloadBoxes.getDownloadInformationQueue());
                 System.exit(0);
+            }
             if (e.getActionCommand().equals("New Download")) {
                 NewDownload newDownload = new NewDownload();
                 //  ArrayListDownloadBoxes arrayListDownloadBoxes = new ArrayListDownloadBoxes(downloadsPanel);

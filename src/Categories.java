@@ -30,7 +30,7 @@ public class Categories extends JPanel {
 
             GridLayout myPanelLayout = new GridLayout(0,1,0,10);
             myPanel.setLayout(myPanelLayout);
-            processing = new JButton("Processing ");
+            processing = new JButton("Processing");
             completed = new JButton("Completed");
             queues = new JButton("Queues");
            // def = new JButton("Default");

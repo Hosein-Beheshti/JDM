@@ -9,10 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 public class Main {
 
-    static SaveInformation saveInformation;
     static ArrayListDownloadBoxes arrayListDownloadBoxes;
 
     static void lookAndFeel (String name)
@@ -136,17 +136,27 @@ public class Main {
        // mainPanel.setBackground(Color.blue);
 
         arrayListDownloadBoxes = new ArrayListDownloadBoxes(mainDownloadPanel);
-        saveInformation = new SaveInformation();
+        SaveInformation saveInformation = new SaveInformation();
+        //File file = new File("list.jdm");
        saveInformation.readDownloadPanels();
 
+       //print removed data
+   /*   try {
+           File file = new File("removed.jdm");
+           FileReader reader = new FileReader(file);
+           BufferedReader bufferedReader = new BufferedReader(reader);
+           String data;
+           while ((data = bufferedReader.readLine()) != null) {
+               System.out.println(data);
+           }
+       }catch (IOException e)
+       {
+           e.printStackTrace();
+       }
+       */
+       //saveInformation.readQueueDownloadPanels();
+
         // frame.setBackground(Color.red);
-
-
         frame.setVisible(true);
-
-
-
-
     }
-
 }
