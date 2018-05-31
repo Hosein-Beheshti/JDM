@@ -1,10 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class NewDownload{
     private MainPanel mainPanel;
@@ -18,6 +19,7 @@ public class NewDownload{
     private JRadioButton queueDownloadButton;
     private SaveInformation saveInformation;
     private Information information;
+    private boolean checkFilter = false;
 
     public NewDownload(){
          myPanel = new JPanel();
@@ -48,54 +50,82 @@ public class NewDownload{
             int result = JOptionPane.showConfirmDialog(null, myPanel,
                     "Please Enter Name and Adress", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
-                        information = new Information();
-                        fileName = name.getText();
-                        information.setName(name.getText());
-                        fileAdress = address.getText();
-                        information.setAdress(address.getText());
-                        Main.arrayListDownloadBoxes.getDownloadInformation().add(information);
-                        DownloadsPanel downloadsPanel = new DownloadsPanel(information.getName());
-                        //add ActionListener for all Downloadspanel when click on thats
 
-                         downloadsPanel.addMouseListener(new MouseAdapter() {
-                    public void mouseClicked(MouseEvent e) {
-                       // downloadsPanel.
-
-                        if(e.isMetaDown())
-                        {
-                            String about = "URL : " + fileAdress + "\n" +
-                                            "Save File Adress : " + Setting.getSaveFileAdress() + "\n" +
-                                            "Size : " + "xxx" + "\n" +
-                                            "Start Time : " + "xxx";
-                          //  System.out.println("salam");
-                            JOptionPane.showConfirmDialog(null, about,
-                                    "File Information", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+                try {
+                    File file = new File("filter.jdm");
+                    FileReader reader = new FileReader(file);
+                    BufferedReader bufferedReader = new BufferedReader(reader);
+                    String data;
+                    checkFilter = false;
+                    while ((data = bufferedReader.readLine()) != null) {
+                        if(data.length()!=0)
+                        if (address.getText().matches(data + ".*")) {
+                //  System.out.println(data);
+                //  System.out.println(address.getText());
+                         //   System.out.println("is filter");
+                            JOptionPane.showConfirmDialog(null, "this download is impossible because this URL is filter",
+                                    "Is Filter", JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
+                            checkFilter = true;
                         }
-
-                        else
-                            {
-                            if (downloadsPanel.isSelect() == false) {
-                                downloadsPanel.setSelect(true);
-                                downloadsPanel.setBackground(Color.lightGray);
-                               // downloadsPanel..setBackground(Color.lightGray);
-                            } else {
-                                downloadsPanel.setSelect(false);
-                                downloadsPanel.setBackground(null);
-
-                            }
-                        }
-                        //System.out.println(e.getSource());
                     }
-                });
-                        Main.arrayListDownloadBoxes.getDownloadBoxes().add(downloadsPanel);
-                        Main.arrayListDownloadBoxes.addBoxes();
-                       // SaveInformation.writeDownloadPanels(downloadsPanel);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                if(queueDownloadButton.isSelected()) {
-                            Main.arrayListDownloadBoxes.getDownloadBoxesQueue().add(downloadsPanel);
-                            Main.arrayListDownloadBoxes.addBoxesToQueue();
+                if (checkFilter == false) {
+                    information = new Information();
+                    fileName = name.getText();
+                    information.setName(name.getText());
+                    fileAdress = address.getText();
+                    information.setAdress(address.getText());
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    Date date = new Date();
+                   // System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
+                    //information.setTime(dateFormat.format(date));
+                    information.setDate(date);
+                    Main.arrayListDownloadBoxes.getDownloadInformation().add(information);
+                    Download download = new Download(address.getText());
+
+                    DownloadsPanel downloadsPanel = new DownloadsPanel(information.getName(),information.getAdress(), information.getDate());
+                    downloadsPanel.setDownload(download);
+                    //add ActionListener for all Downloadspanel when click on thats
+
+                    downloadsPanel.addMouseListener(new MouseAdapter() {
+                        public void mouseClicked(MouseEvent e) {
+                            // downloadsPanel.
+
+                            if (e.isMetaDown()) {
+                                String about = "URL : " + fileAdress + "\n" +
+                                        "Save File Adress : " + Setting.getSaveFileAdress() + "\n" +
+                                        "Size : " + "xxx" + "\n" +
+                                        "Start Time : " + "xxx";
+                                //  System.out.println("salam");
+                                JOptionPane.showConfirmDialog(null, about,
+                                        "File Information", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+                            } else {
+                                if (downloadsPanel.isSelect() == false) {
+                                    downloadsPanel.setSelect(true);
+                                    downloadsPanel.setBackground(Color.lightGray);
+                                    // downloadsPanel..setBackground(Color.lightGray);
+                                } else {
+                                    downloadsPanel.setSelect(false);
+                                    downloadsPanel.setBackground(null);
+
+                                }
+                            }
+                            //System.out.println(e.getSource());
                         }
+                    });
+                    Main.arrayListDownloadBoxes.getDownloadBoxes().add(downloadsPanel);
+                    Main.arrayListDownloadBoxes.addBoxes();
+                    // SaveInformation.writeDownloadPanels(downloadsPanel);
+
+                    if (queueDownloadButton.isSelected()) {
+                        Main.arrayListDownloadBoxes.getDownloadBoxesQueue().add(downloadsPanel);
+                        Main.arrayListDownloadBoxes.addBoxesToQueue();
+                    }
 //                       Main.mainPanel.addBoxes();
+                }
             }
         }
     public String getDownloadName() {
@@ -109,4 +139,6 @@ public class NewDownload{
     public void setMainPanel(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
+
+
 }

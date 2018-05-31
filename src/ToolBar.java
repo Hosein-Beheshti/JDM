@@ -12,6 +12,7 @@ public class ToolBar extends JToolBar {
     private JButton cancel;
     private JButton setting;
     private JButton addToQueue;
+    private Setting settingPanel;
 
 
     public ToolBar() {
@@ -60,7 +61,9 @@ public class ToolBar extends JToolBar {
         setting.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Setting setting = new Setting();
+                settingPanel = new Setting();
+                SaveInformation saveInformation = new SaveInformation();
+                saveInformation.writeSetting(settingPanel);
             }
         });
         ImageIcon addToQueueIcon = new ImageIcon("./Icons/queue.png");
@@ -83,6 +86,7 @@ public class ToolBar extends JToolBar {
         this.add(addToQueue);
     }
 
-
-
+    public Setting getSettingPanel() {
+        return settingPanel;
+    }
 }

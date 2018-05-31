@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.io.Serializable;
+import java.util.Date;
 
 public class Information implements Serializable{
     private String name;
@@ -7,6 +8,7 @@ public class Information implements Serializable{
     private int size;
     private int speed;
     private int percent;
+    private Date time;
 
     public Information()
     {
@@ -51,5 +53,13 @@ public class Information implements Serializable{
 
     public void setPercent(int percent) {
         this.percent = percent;
+    }
+
+    public Date getDate() {
+        return time;
+    }
+
+    public void setDate(Date time) {
+        this.time = time;
     }
 }

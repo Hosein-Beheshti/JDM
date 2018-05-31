@@ -59,7 +59,7 @@ public class SaveInformation {
                 //                Information information1 = new Information();
                 //                information1 = (Information) in1.readObject();
 
-                DownloadsPanel downloadsPanel = new DownloadsPanel(information.getName());
+                DownloadsPanel downloadsPanel = new DownloadsPanel(information.getName(),information.getAdress(),information.getDate());
 
                 Information finalInformation = information;
 
@@ -119,6 +119,45 @@ public class SaveInformation {
                 c.printStackTrace();
                 return;
             }
+            }
+
+            public void writeSetting(Setting setting)
+            {
+                File file = new File("setting.jdm");
+                FileWriter writer = null;
+                try {
+                    writer = new FileWriter(file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try (BufferedWriter bw = new BufferedWriter(writer)) {
+                //    System.out.println(setting.getLimit());
+                    writer.write(String.valueOf(setting.getLimit()));
+                    bw.newLine();
+                    bw.write(setting.getSaveFileAdress());
+                    bw.newLine();
+                    bw.write(setting.getLookAndFeelName());
+                    bw.newLine();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            public void readSetting()
+            {
+                try {
+           File file = new File("setting.jdm");
+           FileReader reader = new FileReader(file);
+           BufferedReader bufferedReader = new BufferedReader(reader);
+           String data;
+            Setting.setLimit(Integer.parseInt(bufferedReader.readLine()));
+            Setting.setSaveFileAdress(bufferedReader.readLine());
+            String lookAndFeelName = bufferedReader.readLine();
+            Setting.setLookAndFeelName(lookAndFeelName);
+            Main.lookAndFeel(lookAndFeelName);
+       }catch (IOException e)
+       {
+           e.printStackTrace();
+       }
             }
 
 

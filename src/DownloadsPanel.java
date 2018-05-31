@@ -1,8 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.Serializable;
+import java.net.URL;
+import java.util.Date;
 
-public class DownloadsPanel extends JPanel implements Serializable{
+public class DownloadsPanel extends JPanel{
 
     private FlowLayout layout;
     private JProgressBar progress;
@@ -11,15 +13,22 @@ public class DownloadsPanel extends JPanel implements Serializable{
     private ImageIcon downloadingIcon;
     private JLabel downloading;
     private String fileName;
+    private String fileAddress;
+    private Date time;
     private boolean select = false;
     private int speed;
     private int persent = 50;
     private static CenterDownloadsBox dP;
     public static CenterDownloadsBox.SouthCenterDownloadsBox southCenterDownloadsBox;
+    private Download download;
 
 
-    public DownloadsPanel(String fileName) {
+    public DownloadsPanel(String fileName, String fileAddress, Date time) {
         this.fileName = fileName;
+        this.fileAddress = fileAddress;
+        this.time = time;
+        this.download = download;
+
         layout = new FlowLayout();
         this.setLayout(layout);
         this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
@@ -130,6 +139,22 @@ public class DownloadsPanel extends JPanel implements Serializable{
 
     public boolean isSelect() {
         return select;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getFileAddress() {
+        return fileAddress;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setDownload(Download download) {
+        this.download = download;
     }
 }
 

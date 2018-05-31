@@ -17,7 +17,7 @@ public class Categories extends JPanel {
     private JButton def;
     private JButton up;
     private JButton down;
-    static String categoriesSelect = "Processing";
+    static String categoriesSelect ;
 
 
     public Categories(MainDownloadPanel mainDownloadPanel){
@@ -30,9 +30,9 @@ public class Categories extends JPanel {
 
             GridLayout myPanelLayout = new GridLayout(0,1,0,10);
             myPanel.setLayout(myPanelLayout);
-            processing = new JButton("Processing");
-            completed = new JButton("Completed");
-            queues = new JButton("Queues");
+            processing = new JButton();
+            completed = new JButton();
+            queues = new JButton();
            // def = new JButton("Default");
 
         ImageIcon buttonBackground = new ImageIcon("./Icons/ButtonBackground.jpg");
@@ -107,4 +107,25 @@ public class Categories extends JPanel {
             }
         });
     }
+    public void setProcessingText(String name) {
+        processing.setText(name);
+        categoriesSelect = name;
+    }
+    public void setCompletedText(String name) {
+        completed.setText(name);
+    }
+    public void setQueuesText(String name) {
+        queues.setText(name);
+    }
+    public String getProcessingText() {
+       return processing.getText();
+    }
+    public String getCompletedText() {
+        return completed.getText();
+    }
+    public String getQueuesText() {
+        return queues.getText();
+    }
+
+
 }

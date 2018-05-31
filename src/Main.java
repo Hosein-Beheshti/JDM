@@ -10,10 +10,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.net.URI;
+import java.nio.charset.Charset;
+import java.nio.file.*;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 
 public class Main {
 
     static ArrayListDownloadBoxes arrayListDownloadBoxes;
+    static MainDownloadPanel mainDownloadPanel;
+    static Manager manager;
+    static JFrame frame;
+
 
     static void lookAndFeel (String name)
     {
@@ -37,7 +50,8 @@ public class Main {
 
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("JDM");
+
+        frame = new JFrame("JDM");
         frame.setLocation(450,200);
         frame.setSize(800,700);
 
@@ -120,11 +134,11 @@ public class Main {
         MenuPanel menuPanel = new MenuPanel();
        // menuPanel.setBackground(Color.black);
         frame.add(menuPanel,BorderLayout.NORTH);
-
         MainDownloadPanel mainDownloadPanel = new MainDownloadPanel();
         MainPanel mainPanel = new MainPanel(mainDownloadPanel);
         JScrollPane scroll = new JScrollPane(mainPanel);
         frame.add(scroll,BorderLayout.CENTER);
+
 
        // mainPanel.setBackground(new Color(50,50,50));
        // mainDownloadPanel.setBackground(new Color(50,50,50));
@@ -135,12 +149,16 @@ public class Main {
       //  mainPanel.add(b1);
        // mainPanel.setBackground(Color.blue);
 
-        arrayListDownloadBoxes = new ArrayListDownloadBoxes(mainDownloadPanel);
+        arrayListDownloadBoxes = new ArrayListDownloadBoxes(mainDownloadPanel,categories);
         SaveInformation saveInformation = new SaveInformation();
         //File file = new File("list.jdm");
        saveInformation.readDownloadPanels();
+        saveInformation.readSetting();
+        manager = new Manager(mainDownloadPanel,menuPanel,categories);
+        manager.setLanguage("English");
 
-       //print removed data
+
+        //print removed data
    /*   try {
            File file = new File("removed.jdm");
            FileReader reader = new FileReader(file);
@@ -157,6 +175,12 @@ public class Main {
        //saveInformation.readQueueDownloadPanels();
 
         // frame.setBackground(Color.red);
+
+
+
         frame.setVisible(true);
+
+
+
     }
 }

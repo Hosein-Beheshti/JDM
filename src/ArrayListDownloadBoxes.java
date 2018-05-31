@@ -17,8 +17,9 @@ public class ArrayListDownloadBoxes {
 
 
     private MainDownloadPanel mainDownloadPanel;
+    private Categories categories;
 
-    public ArrayListDownloadBoxes(MainDownloadPanel mainDownloadPanel) {
+    public ArrayListDownloadBoxes(MainDownloadPanel mainDownloadPanel,Categories categories) {
         downloadBoxes = new ArrayList<>();
         downloadBoxesQueue = new ArrayList<>();
         downloadBoxesCompleted = new ArrayList<>();
@@ -26,6 +27,7 @@ public class ArrayListDownloadBoxes {
         downloadInformationQueue = new ArrayList<>();
 
         this.mainDownloadPanel = mainDownloadPanel;
+        this.categories = categories;
     }
 
     public void addBoxes() {
@@ -74,7 +76,7 @@ public class ArrayListDownloadBoxes {
     }
 
     public void remove() {
-        if (Categories.categoriesSelect.equals("Processing")) {
+        if (Categories.categoriesSelect.equals(categories.getProcessingText())) {
             Iterator<DownloadsPanel> itr = downloadBoxes.iterator();
             Iterator<Information> informationIterator = downloadInformation.iterator();
 
@@ -125,7 +127,7 @@ public class ArrayListDownloadBoxes {
             mainDownloadPanel.revalidate();
             mainDownloadPanel.repaint();
         }
-        if (Categories.categoriesSelect.equals("Queues")) {
+        if (Categories.categoriesSelect.equals(categories.getQueuesText())) {
             Iterator<DownloadsPanel> itr1 = downloadBoxesQueue.iterator();
             Iterator<Information> informationIterator1 = downloadInformationQueue.iterator();
 
@@ -144,7 +146,7 @@ public class ArrayListDownloadBoxes {
             mainDownloadPanel.revalidate();
             mainDownloadPanel.repaint();
         }
-        if (Categories.categoriesSelect.equals("Completed")) {
+        if (Categories.categoriesSelect.equals(categories.getCompletedText())) {
             Iterator<DownloadsPanel> itr2 = downloadBoxesCompleted.iterator();
 
             while (itr2.hasNext()) {
@@ -212,5 +214,9 @@ public class ArrayListDownloadBoxes {
 
     public ArrayList<Information> getDownloadInformationQueue() {
         return downloadInformationQueue;
+    }
+
+    public void setCategories(Categories categories) {
+        this.categories = categories;
     }
 }
