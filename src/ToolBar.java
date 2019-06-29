@@ -13,12 +13,13 @@ public class ToolBar extends JToolBar {
     private JButton setting;
     private JButton addToQueue;
     private Setting settingPanel;
+    private static boolean isPause = false;
 
 
     public ToolBar() {
 
         this.setFloatable(false);
-     //   this.setBackground(Color.getColor("",12878));
+        //   this.setBackground(Color.getColor("",12878));
 
         GridLayout layout = new GridLayout();
         this.setLayout(new FlowLayout(0));
@@ -36,10 +37,22 @@ public class ToolBar extends JToolBar {
         ImageIcon pauseIcon = new ImageIcon("./Icons/pause.png");
         pause = new JButton(pauseIcon);
         pause.setToolTipText("Pause");
+        pause.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.arrayListDownloadBoxes.pause();
+            }
+        });
 
         ImageIcon resumeIcon = new ImageIcon("./Icons/resume.png");
         resume = new JButton(resumeIcon);
         resume.setToolTipText("Resume");
+        resume.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.arrayListDownloadBoxes.resume();
+            }
+        });
 
         ImageIcon removeIcon = new ImageIcon("./Icons/remove.png");
         remove = new JButton(removeIcon);
@@ -54,6 +67,12 @@ public class ToolBar extends JToolBar {
         ImageIcon cancelIcon = new ImageIcon("./Icons/cancel.png");
         cancel = new JButton(cancelIcon);
         cancel.setToolTipText("Cancel");
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.arrayListDownloadBoxes.cancel();
+            }
+        });
 
         ImageIcon settingIcon = new ImageIcon("./Icons/setting.png");
         setting = new JButton(settingIcon);
@@ -76,7 +95,7 @@ public class ToolBar extends JToolBar {
             }
         });
 
-        this.setSize(10,10);
+        this.setSize(10, 10);
         this.add(newDownload);
         this.add(pause);
         this.add(resume);
@@ -88,5 +107,9 @@ public class ToolBar extends JToolBar {
 
     public Setting getSettingPanel() {
         return settingPanel;
+    }
+
+    public static boolean isIsPause() {
+        return isPause;
     }
 }

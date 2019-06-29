@@ -17,23 +17,26 @@ public class Categories extends JPanel {
     private JButton def;
     private JButton up;
     private JButton down;
-    static String categoriesSelect ;
+    static String categoriesSelect;
+    private static String processingName;
+    private static String completedName;
+    private static String queueName;
 
 
-    public Categories(MainDownloadPanel mainDownloadPanel){
+    public Categories(MainDownloadPanel mainDownloadPanel) {
         this.mainDownloadPanel = mainDownloadPanel;
         layout = new BorderLayout();
         this.setLayout(layout);
 
         myPanel = new JPanel();
-        myPanel.setBackground(new Color(78,0,0));
+        myPanel.setBackground(new Color(78, 0, 0));
 
-            GridLayout myPanelLayout = new GridLayout(0,1,0,10);
-            myPanel.setLayout(myPanelLayout);
-            processing = new JButton();
-            completed = new JButton();
-            queues = new JButton();
-           // def = new JButton("Default");
+        GridLayout myPanelLayout = new GridLayout(0, 1, 0, 10);
+        myPanel.setLayout(myPanelLayout);
+        processing = new JButton();
+        completed = new JButton();
+        queues = new JButton();
+        // def = new JButton("Default");
 
         ImageIcon buttonBackground = new ImageIcon("./Icons/ButtonBackground.jpg");
         processing.setBackground(null);
@@ -58,25 +61,25 @@ public class Categories extends JPanel {
         myPanel.add(completed);
         myPanel.add(queues);
 
-            queues.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    categoriesSelect = e.getActionCommand();
-                    Main.arrayListDownloadBoxes.addBoxesToQueue();
+        queues.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                categoriesSelect = e.getActionCommand();
+                Main.arrayListDownloadBoxes.addBoxesToQueue();
 
-                }
-            });
+            }
+        });
 
-            processing.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    categoriesSelect = e.getActionCommand();
-                    Main.arrayListDownloadBoxes.addBoxes();
-                }
-            });
+        processing.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                categoriesSelect = e.getActionCommand();
+                Main.arrayListDownloadBoxes.addBoxes();
+            }
+        });
 
 
-        this.add(myPanel,BorderLayout.NORTH);
+        this.add(myPanel, BorderLayout.NORTH);
         //Move panel
 
         move = new JPanel();
@@ -94,7 +97,7 @@ public class Categories extends JPanel {
                 Main.arrayListDownloadBoxes.swap("DOWN");
             }
         });
-        GridLayout moveLayout = new GridLayout(2,1);
+        GridLayout moveLayout = new GridLayout(2, 1);
         move.setLayout(moveLayout);
         move.add(up);
         move.add(down);
@@ -103,28 +106,37 @@ public class Categories extends JPanel {
         queues.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-             //   this.add(move,BorderLayout.SOUTH);
+                //   this.add(move,BorderLayout.SOUTH);
             }
         });
     }
+
     public void setProcessingText(String name) {
         processing.setText(name);
         categoriesSelect = name;
+        processingName = name;
     }
+
     public void setCompletedText(String name) {
         completed.setText(name);
+        completedName = name;
     }
+
     public void setQueuesText(String name) {
         queues.setText(name);
+        queueName = name;
     }
-    public String getProcessingText() {
-       return processing.getText();
+
+    public static String getProcessingText() {
+        return processingName;
     }
-    public String getCompletedText() {
-        return completed.getText();
+
+    public static String getCompletedText() {
+        return completedName;
     }
-    public String getQueuesText() {
-        return queues.getText();
+
+    public static String getQueuesText() {
+        return queueName;
     }
 
 

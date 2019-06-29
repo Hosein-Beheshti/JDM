@@ -15,11 +15,10 @@ public class ArrayListDownloadBoxes {
     private ArrayList<Information> downloadInformationQueue;
 
 
-
     private MainDownloadPanel mainDownloadPanel;
     private Categories categories;
 
-    public ArrayListDownloadBoxes(MainDownloadPanel mainDownloadPanel,Categories categories) {
+    public ArrayListDownloadBoxes(MainDownloadPanel mainDownloadPanel, Categories categories) {
         downloadBoxes = new ArrayList<>();
         downloadBoxesQueue = new ArrayList<>();
         downloadBoxesCompleted = new ArrayList<>();
@@ -34,12 +33,12 @@ public class ArrayListDownloadBoxes {
         //  System.out.println(downloadBoxes.size());
         mainDownloadPanel.removeAll();
         for (DownloadsPanel dP : downloadBoxes) {
-            
+
             if (downloadBoxes.size() > 4) {
                 mainDownloadPanel.increasRowa(downloadBoxes.size());
             }
             mainDownloadPanel.add(dP);
-          //  System.out.println(dP.isSelect());
+            //  System.out.println(dP.isSelect());
         }
         mainDownloadPanel.revalidate();
         mainDownloadPanel.repaint();
@@ -54,6 +53,7 @@ public class ArrayListDownloadBoxes {
             if (dP.isSelect()) {
                 downloadInformationQueue.add(information);
                 downloadBoxesQueue.add(dP);
+                dP.setQueue(true);
                 dP.setSelect(false);
                 dP.setBackground(null);
             }
@@ -63,6 +63,7 @@ public class ArrayListDownloadBoxes {
 
         }
     }
+
     public void addBoxesToQueue() {
         mainDownloadPanel.removeAll();
         for (DownloadsPanel dP : downloadBoxesQueue) {
@@ -88,7 +89,7 @@ public class ArrayListDownloadBoxes {
                     mainDownloadPanel.remove(dp);
                     //write name and adress file that removed
                     File file = new File("removed.jdm");
-                    try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile(),true))) {
+                    try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile(), true))) {
                         bw.write(information.getName());
                         bw.newLine();
                         bw.write(information.getAdress());
@@ -136,6 +137,7 @@ public class ArrayListDownloadBoxes {
                 Information information1 = informationIterator1.next();
 
                 if (dp.isSelect() == true) {
+                    dp.setQueue(false);
                     mainDownloadPanel.remove(dp);
                     informationIterator1.remove();
                     dp.setSelect(false);
@@ -164,8 +166,8 @@ public class ArrayListDownloadBoxes {
             mainDownloadPanel.repaint();
         }
     }
-    public void swap(String task)
-    {
+
+    public void swap(String task) {
 //            Iterator<DownloadsPanel> itr1 = downloadBoxesQueue.iterator();
 //            int i = 0;
 //            while (itr1.hasNext()) {
@@ -178,24 +180,72 @@ public class ArrayListDownloadBoxes {
 //                i++;
 //            }
 //        }
-            int i = 0;
-           for(DownloadsPanel dp : downloadBoxesQueue)
-           {
-               if(dp.isSelect() == true) {
-                   if (i > 0) {
-                       if (task.equals("UP"))
-                           Collections.swap(downloadBoxesQueue, i, (i - 1));
-                   }
-                       if (task.equals("DOWN")) {
-                           i++;
-                           Collections.swap(downloadBoxesQueue, i, (i - 1));
-                           i--;
-                       }
-               }
-               i++;
-           }
+        int i = 0;
+        for (DownloadsPanel dp : downloadBoxesQueue) {
+            if (dp.isSelect() == true) {
+                if (i > 0) {
+                    if (task.equals("UP"))
+                        Collections.swap(downloadBoxesQueue, i, (i - 1));
+                }
+                if (task.equals("DOWN")) {
+                    i++;
+                    Collections.swap(downloadBoxesQueue, i, (i - 1));
+                    i--;
+                }
+            }
+            i++;
+        }
         addBoxesToQueue();
     }
+
+    public void pause() {
+        for (DownloadsPanel dP : downloadBoxes) {
+            //   System.out.println(dP.isSelect());
+            if (dP.isSelect()) {
+                dP.setPaused(true);
+            }
+        }
+    }
+
+    public void resume() {
+        for (DownloadsPanel dP : downloadBoxes) {
+            //   System.out.println(dP.isSelect());
+            if (dP.isSelect()) {
+                dP.setPaused(false);
+             /*   if (dP.isCancel()) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("xXxXx");
+                            DownloadTask task = new DownloadTask(dP, dP.getFileAddress(), Setting.getSaveFileAdress());
+                            task.execute();
+                        }
+                    });
+                }*/
+            }
+        }
+    }
+
+    public void cancel() {
+        for (DownloadsPanel dP : downloadBoxes) {
+            //   System.out.println(dP.isSelect());
+            if (dP.isSelect()) {
+                dP.setCancel(true);
+            }
+        }
+    }
+
+    public int progressing() {
+        int progressing = 0;
+        for (DownloadsPanel dP : downloadBoxes) {
+            //   System.out.println(dP.isSelect());
+            if (dP.isProgressing() == true) {
+                progressing++;
+            }
+        }
+        return progressing;
+    }
+
     public ArrayList<DownloadsPanel> getDownloadBoxes() {
         return downloadBoxes;
     }

@@ -4,6 +4,12 @@ import java.util.Collections;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+/**
+ * this is a class that contain
+ * some methods that we need for this project
+ *
+ * @author hosein beheshti
+ */
 public class Manager {
 
 
@@ -11,60 +17,88 @@ public class Manager {
     private MenuPanel menuPanel;
     private Categories categories;
 
-    public Manager(MainDownloadPanel mainDownloadPanel,MenuPanel menuPanel,Categories categories)
-    {
+    /**
+     * Constructor for this class
+     *
+     * @param mainDownloadPanel
+     * @param menuPanel
+     * @param categories
+     */
+    public Manager(MainDownloadPanel mainDownloadPanel, MenuPanel menuPanel, Categories categories) {
         this.mainDownloadPanel = mainDownloadPanel;
         this.menuPanel = menuPanel;
         this.categories = categories;
 
     }
 
-    public void search(String name)
-    {
+    /**
+     * this is a method for serch by name or adress
+     * between downloads
+     *
+     * @param name
+     */
+    public void search(String name) {
         mainDownloadPanel.removeAll();
-        for (DownloadsPanel dP : Main.arrayListDownloadBoxes.getDownloadBoxes())
-        {
-           if(dP.getFileName().matches(".*" + name + ".*") || dP.getFileAddress().matches(".*" + name + ".*"))
-           {
-               mainDownloadPanel.add(dP);
-           }
+        for (DownloadsPanel dP : Main.arrayListDownloadBoxes.getDownloadBoxes()) {
+            if (dP.getFileName().matches(".*" + name + ".*") || dP.getFileAddress().matches(".*" + name + ".*")) {
+                mainDownloadPanel.add(dP);
+            }
+
         }
         mainDownloadPanel.revalidate();
         mainDownloadPanel.repaint();
     }
 
-    public void sort(String name)
-    {
-        if(name.equals("By Time")) {
-            Collections.sort(Main.arrayListDownloadBoxes.getDownloadBoxes(), (o1, o2) -> {return o2.getTime().compareTo( o1.getTime()) ;});
+    /**
+     * this is a method for sort downloads
+     * by name or by time or by size
+     *
+     * @param name
+     */
+    public void sort(String name) {
+        if (name.equals("By Time")) {
+            Collections.sort(Main.arrayListDownloadBoxes.getDownloadBoxes(), (o1, o2) -> {
+                return o2.getTime().compareTo(o1.getTime());
+            });
             Main.arrayListDownloadBoxes.addBoxes();
             mainDownloadPanel.revalidate();
             mainDownloadPanel.repaint();
         }
-        if(name.equals("By Name")) {
-            Collections.sort(Main.arrayListDownloadBoxes.getDownloadBoxes(), (o1, o2) -> {return o2.getFileName().compareTo( o1.getFileName()) ;});
+        if (name.equals("By Name")) {
+            Collections.sort(Main.arrayListDownloadBoxes.getDownloadBoxes(), (o1, o2) -> {
+                return o2.getFileName().compareTo(o1.getFileName());
+            });
             Main.arrayListDownloadBoxes.addBoxes();
             mainDownloadPanel.revalidate();
             mainDownloadPanel.repaint();
         }
-        if(name.equals("By Size")) {
-          //  Collections.sort(Main.arrayListDownloadBoxes.getDownloadBoxes(), (o1, o2) -> {return o2.getFileName() - ( o1.getFileName()) ;});
+        if (name.equals("By Size")) {
+            //  Collections.sort(Main.arrayListDownloadBoxes.getDownloadBoxes(), (o1, o2) -> {return o2.getFileName() - ( o1.getFileName()) ;});
             Main.arrayListDownloadBoxes.addBoxes();
             mainDownloadPanel.revalidate();
             mainDownloadPanel.repaint();
         }
     }
-    public void changeSortTrend()
-    {
+
+    /**
+     * change trend sort
+     */
+    public void changeSortTrend() {
         Collections.reverse(Main.arrayListDownloadBoxes.getDownloadBoxes());
         Main.arrayListDownloadBoxes.addBoxes();
         mainDownloadPanel.revalidate();
         mainDownloadPanel.repaint();
     }
-    public void setLanguage(String name)
-    {
+
+    /**
+     * this method read from file our JDM field name
+     * from English Language file or persian
+     *
+     * @param name
+     */
+    public void setLanguage(String name) {
         try {
-            if(name.equals("Persian")) {
+            if (name.equals("Persian")) {
                 FileReader reader = new FileReader("PersianLanguage.txt");
                 BufferedReader bufferedReader = new BufferedReader(reader);
                 menuPanel.getMenuPanel().setDownloadsText(bufferedReader.readLine());
@@ -87,7 +121,7 @@ public class Manager {
                 Setting.setFilterAddressText(bufferedReader.readLine());
                 Setting.setLanguageText(bufferedReader.readLine());
             }
-            if(name.equals("English")) {
+            if (name.equals("English")) {
                 FileReader reader = new FileReader("EnglishLanguage.txt");
                 BufferedReader bufferedReader = new BufferedReader(reader);
                 menuPanel.getMenuPanel().setDownloadsText(bufferedReader.readLine());
@@ -111,16 +145,18 @@ public class Manager {
                 Setting.setLanguageText(bufferedReader.readLine());
             }
 
-        }catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
-    public void export ()
-    {
+
+    /**
+     * this method export .JDM files to a zip file
+     */
+    public void export() {
         try {
-            FileOutputStream fos = new FileOutputStream("information1.zip");
+            FileOutputStream fos = new FileOutputStream("information.zip");
             ZipOutputStream zos = new ZipOutputStream(fos);
             byte[] buffer = new byte[128];
 

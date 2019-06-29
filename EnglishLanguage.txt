@@ -1,0 +1,19 @@
+Downloads
+Help
+New Download
+Pause
+Resume
+Cancel
+Remove
+Setting
+Exit
+About
+Export
+Processing
+Completed
+Queue
+Limit Download
+Look And Feel
+Save File Address
+Filter Address
+Language

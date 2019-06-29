@@ -44,12 +44,30 @@ public class MenuBar extends JMenuBar {
 
         pause = new JMenuItem();
         pause.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, Event.CTRL_MASK));
+        pause.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.arrayListDownloadBoxes.pause();
+            }
+        });
 
         resume = new JMenuItem();
         resume.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, Event.CTRL_MASK));
+        resume.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.arrayListDownloadBoxes.resume();
+            }
+        });
 
         cancel = new JMenuItem();
         cancel.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK));
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.arrayListDownloadBoxes.cancel();
+            }
+        });
 
         remove = new JMenuItem();
         remove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, Event.CTRL_MASK));
@@ -77,7 +95,7 @@ public class MenuBar extends JMenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SaveInformation saveInformation = new SaveInformation();
-                saveInformation.writeDownloadPanels(Main.arrayListDownloadBoxes.getDownloadInformation(),Main.arrayListDownloadBoxes.getDownloadInformationQueue());
+                saveInformation.writeDownloadPanels(Main.arrayListDownloadBoxes.getDownloadInformation(), Main.arrayListDownloadBoxes.getDownloadInformationQueue());
                 System.exit(0);
             }
         });
@@ -90,7 +108,6 @@ public class MenuBar extends JMenuBar {
                 Main.manager.export();
             }
         });
-
 
 
         //add Items to downloads JMenu
@@ -154,38 +171,46 @@ public class MenuBar extends JMenuBar {
     public void setDownloadsText(String name) {
         downloads.setText(name);
     }
+
     public void setHelpText(String name) {
         help.setText(name);
     }
+
     public void setNewDownloadText(String name) {
         newDownload.setText(name);
     }
+
     public void setPauseText(String name) {
         pause.setText(name);
     }
+
     public void setResumeText(String name) {
         resume.setText(name);
     }
+
     public void setCancelText(String name) {
         cancel.setText(name);
     }
+
     public void setRemoveText(String name) {
         remove.setText(name);
     }
+
     public void setSettingText(String name) {
         setting.setText(name);
     }
+
     public void setExitText(String name) {
         exit.setText(name);
     }
+
     public void setAboutText(String name) {
         about.setText(name);
     }
-    public void setExportText (String name)
-    {
+
+    public void setExportText(String name) {
         export.setText(name);
     }
-
 
 
 }

@@ -5,6 +5,12 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.io.IOException;
 
+/**
+ * this is a class for filter address
+ *
+ * @author hosein beheshti
+ */
+
 public class FilterAdress {
 
     private JFrame filter;
@@ -14,6 +20,10 @@ public class FilterAdress {
     private JButton editFilter;
     private JButton okEditButton;
     private File file;
+
+    /**
+     * constructor for FilterAddress clas
+     */
 
     public FilterAdress() {
         filter = new JFrame();
@@ -27,7 +37,7 @@ public class FilterAdress {
         // filterText.setLayout(new GridLayout(2,1));
         //  filterText.setSize(new Dimension(200,50));
         JScrollPane scrollPane = new JScrollPane(filterText);
-        filter.add(scrollPane,BorderLayout.CENTER);
+        filter.add(scrollPane, BorderLayout.CENTER);
         addToFilter = new JButton("add");
         addToFilter.addActionListener(new ActionListener() {
             @Override
@@ -71,11 +81,11 @@ public class FilterAdress {
                 }
             }
         });
-       buttonsPanel = new JPanel();
-       buttonsPanel.add(addToFilter);
-       buttonsPanel.add(editFilter);
-       buttonsPanel.add(okEditButton);
-       filter.add(buttonsPanel,BorderLayout.SOUTH);
+        buttonsPanel = new JPanel();
+        buttonsPanel.add(addToFilter);
+        buttonsPanel.add(editFilter);
+        buttonsPanel.add(okEditButton);
+        filter.add(buttonsPanel, BorderLayout.SOUTH);
         filter.setVisible(true);
     }
 }

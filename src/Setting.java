@@ -18,6 +18,7 @@ public class  Setting {
     private JPanel lookAndFeel;
     private JPanel filter;
     private JPanel language;
+    private static int i;
 
     private JFileChooser fileChooser;
     private JFrame frame;
@@ -62,7 +63,6 @@ public class  Setting {
                 fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 if (fileChooser.showSaveDialog(choosFile) == JFileChooser.APPROVE_OPTION) {
                     saveFileAdress = String.valueOf(fileChooser.getSelectedFile());
-                    Download.setSaveAddress(saveFileAdress);
                     // System.out.println(saveFileAdress);
                 }
             }
@@ -220,6 +220,14 @@ public class  Setting {
 
     public static void setLanguageText(String languageText) {
         Setting.languageText = languageText;
+    }
+
+    public static int getI() {
+        return i;
+    }
+
+    public static void setI() {
+        Setting.i++;
     }
 }
 

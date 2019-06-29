@@ -3,13 +3,28 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/**
+ * this is a class for save our JDM information
+ * for example Download lists,setting,filter Adresses and ...
+ *
+ * @author hosein beheshti
+ */
 
 public class SaveInformation {
     public SaveInformation() {
 
     }
+
+    /**
+     * Write Downloads information to a .JDM file
+     *
+     * @param mainArray
+     * @param queueArray
+     */
 
     public void writeDownloadPanels(ArrayList<Information> mainArray, ArrayList<Information> queueArray) {
         ObjectOutputStream out = null;
@@ -38,6 +53,10 @@ public class SaveInformation {
         }
     }
 
+    /**
+     * read Downloads information from .JDM file
+     * and creat downloads panel and add to frame
+     */
     public void readDownloadPanels() {
         ObjectInputStream in = null;
         FileInputStream fileInputStream = null;
@@ -59,7 +78,10 @@ public class SaveInformation {
                 //                Information information1 = new Information();
                 //                information1 = (Information) in1.readObject();
 
-                DownloadsPanel downloadsPanel = new DownloadsPanel(information.getName(),information.getAdress(),information.getDate());
+                DownloadsPanel downloadsPanel = new DownloadsPanel(information.getName(), information.getAdress(), information.getDate());
+                downloadsPanel.setFileAddress(information.getAdress());
+                downloadsPanel.setSize(information.getSize(), 0);
+                downloadsPanel.setCancel(true);
 
                 Information finalInformation = information;
 
@@ -68,22 +90,28 @@ public class SaveInformation {
                     public void mouseClicked(MouseEvent e) {
                         // downloadsPanel.
                         if (e.isMetaDown()) {
+                            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
                             String about = "URL : " + finalInformation.getAdress() + "\n" +
                                     "Save File Adress : " + Setting.getSaveFileAdress() + "\n" +
-                                    "Size : " + "xxx" + "\n" +
-                                    "Start Time : " + "xxx";
+                                    "Size : " + downloadsPanel.getSize1() / 1000 + "\n" +
+                                    "Start Time : " + dateFormat.format(downloadsPanel.getTime());
                             //  System.out.println("salam");
                             JOptionPane.showConfirmDialog(null, about,
                                     "File Information", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
                         } else {
-                            if (downloadsPanel.isSelect() == false) {
-                                downloadsPanel.setSelect(true);
-                                downloadsPanel.setBackground(Color.lightGray);
-                                // downloadsPanel..setBackground(Color.lightGray);
-
+                            if (e.getClickCount() == 2 && downloadsPanel.isCompelete()) {                // write here your event handling code
+                                System.out.println("You clicked two times on the button");
                             } else {
-                                downloadsPanel.setSelect(false);
-                                downloadsPanel.setBackground(null);
+                                if (downloadsPanel.isSelect() == false) {
+                                    downloadsPanel.setSelect(true);
+                                    downloadsPanel.setBackground(Color.lightGray);
+                                    // downloadsPanel..setBackground(Color.lightGray);
+                                } else {
+                                    downloadsPanel.setSelect(false);
+                                    downloadsPanel.setBackground(null);
+
+                                }
                             }
                         }
                         //System.out.println(e.getSource());
@@ -100,65 +128,65 @@ public class SaveInformation {
                 Information information1 = new Information();
                 while (fileInputStream1.available() > 0) {
                     information1 = (Information) in1.readObject();
-                    if(information.getName().equals(information1.getName()))
-                    {
+                    if (information.getName().equals(information1.getName())) {
                         Main.arrayListDownloadBoxes.getDownloadBoxesQueue().add(downloadsPanel);
                         Main.arrayListDownloadBoxes.getDownloadInformationQueue().add(information);
                     }
-
-                }
-
-            }
-        }catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException i) {
-                i.printStackTrace();
-                return;
-            } catch (ClassNotFoundException c) {
-                System.out.println("Phone class not found");
-                c.printStackTrace();
-                return;
-            }
-            }
-
-            public void writeSetting(Setting setting)
-            {
-                File file = new File("setting.jdm");
-                FileWriter writer = null;
-                try {
-                    writer = new FileWriter(file);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try (BufferedWriter bw = new BufferedWriter(writer)) {
-                //    System.out.println(setting.getLimit());
-                    writer.write(String.valueOf(setting.getLimit()));
-                    bw.newLine();
-                    bw.write(setting.getSaveFileAdress());
-                    bw.newLine();
-                    bw.write(setting.getLookAndFeelName());
-                    bw.newLine();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
                 }
             }
-            public void readSetting()
-            {
-                try {
-           File file = new File("setting.jdm");
-           FileReader reader = new FileReader(file);
-           BufferedReader bufferedReader = new BufferedReader(reader);
-           String data;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException i) {
+            i.printStackTrace();
+            return;
+        } catch (ClassNotFoundException c) {
+            System.out.println("Phone class not found");
+            c.printStackTrace();
+            return;
+        }
+    }
+
+    /**
+     * write setting information to a .JDM file
+     *
+     * @param setting
+     */
+    public void writeSetting(Setting setting) {
+        File file = new File("setting.jdm");
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try (BufferedWriter bw = new BufferedWriter(writer)) {
+            //    System.out.println(setting.getLimit());
+            writer.write(String.valueOf(setting.getLimit()));
+            bw.newLine();
+            bw.write(setting.getSaveFileAdress());
+            bw.newLine();
+            bw.write(setting.getLookAndFeelName());
+            bw.newLine();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void readSetting() {
+        try {
+            File file = new File("setting.jdm");
+            FileReader reader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String data;
             Setting.setLimit(Integer.parseInt(bufferedReader.readLine()));
             Setting.setSaveFileAdress(bufferedReader.readLine());
             String lookAndFeelName = bufferedReader.readLine();
             Setting.setLookAndFeelName(lookAndFeelName);
             Main.lookAndFeel(lookAndFeelName);
-       }catch (IOException e)
-       {
-           e.printStackTrace();
-       }
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
   /*  public void readQueueDownloadPanels() {

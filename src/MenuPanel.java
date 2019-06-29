@@ -83,26 +83,28 @@ public class MenuPanel extends JPanel {
 //        JButton button = new JButton("hosein");
 //        this.add(button);
     }
+
     class MyActionListener implements ActionListener {
         Object oldItem;
 
         public void actionPerformed(ActionEvent evt) {
 
-            if(sort.getSelectedItem().toString().equals("By Time")) {
-              //  System.out.println("Time");
+            if (sort.getSelectedItem().toString().equals("By Time")) {
+                //  System.out.println("Time");
                 Main.manager.sort("By Time");
             }
-            if(sort.getSelectedItem().toString().equals("By Name")) {
-             //   System.out.println("Name");
+            if (sort.getSelectedItem().toString().equals("By Name")) {
+                //   System.out.println("Name");
                 Main.manager.sort("By Name");
             }
-            if(sort.getSelectedItem().toString().equals("By Size")) {
-              //  System.out.println("Size");
+            if (sort.getSelectedItem().toString().equals("By Size")) {
+                //  System.out.println("Size");
                 Main.manager.sort("By Size");
 
             }
         }
     }
+
     public MenuBar getMenuPanel() {
         return menuPanel;
     }

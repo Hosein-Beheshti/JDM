@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Information implements Serializable{
+public class Information implements Serializable {
     private String name;
     private String adress;
     private int size;
@@ -10,8 +10,7 @@ public class Information implements Serializable{
     private int percent;
     private Date time;
 
-    public Information()
-    {
+    public Information() {
 
     }
 

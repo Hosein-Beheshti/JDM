@@ -28,22 +28,20 @@ public class Main {
     static JFrame frame;
 
 
-    static void lookAndFeel (String name)
-    {
+    static void lookAndFeel(String name) {
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-            if(name.equals("Nimbus"))
+            if (name.equals("Nimbus"))
                 UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
             if (name.equals("Default"))
                 UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-            if(name.equals("Windows Classic"))
+            if (name.equals("Windows Classic"))
                 UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
 
-                for(Window window : JFrame.getWindows())
-                {
-                    SwingUtilities.updateComponentTreeUI(window);
-                }
-        } catch(Exception e){
+            for (Window window : JFrame.getWindows()) {
+                SwingUtilities.updateComponentTreeUI(window);
+            }
+        } catch (Exception e) {
 
         }
     }
@@ -52,8 +50,8 @@ public class Main {
     public static void main(String[] args) {
 
         frame = new JFrame("JDM");
-        frame.setLocation(450,200);
-        frame.setSize(800,700);
+        frame.setLocation(450, 200);
+        frame.setSize(800, 700);
 
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         ImageIcon imageIcon = new ImageIcon("./Icons/frame.png");
@@ -125,36 +123,35 @@ public class Main {
 
         BorderLayout layout = new BorderLayout();
         frame.setLayout(layout);
-        frame.setMinimumSize(new Dimension(1000,500));
+        frame.setMinimumSize(new Dimension(1000, 500));
 
         //  frame.add(new JPanel(),BorderLayout.NORTH);
 
 
-
         MenuPanel menuPanel = new MenuPanel();
-       // menuPanel.setBackground(Color.black);
-        frame.add(menuPanel,BorderLayout.NORTH);
+        // menuPanel.setBackground(Color.black);
+        frame.add(menuPanel, BorderLayout.NORTH);
         MainDownloadPanel mainDownloadPanel = new MainDownloadPanel();
         MainPanel mainPanel = new MainPanel(mainDownloadPanel);
         JScrollPane scroll = new JScrollPane(mainPanel);
-        frame.add(scroll,BorderLayout.CENTER);
+        frame.add(scroll, BorderLayout.CENTER);
 
 
-       // mainPanel.setBackground(new Color(50,50,50));
-       // mainDownloadPanel.setBackground(new Color(50,50,50));
+        // mainPanel.setBackground(new Color(50,50,50));
+        // mainDownloadPanel.setBackground(new Color(50,50,50));
 
         Categories categories = new Categories(mainDownloadPanel);
-        categories.setBackground(new Color(78,0,0));        //menuPanel.setSize(100,100);
-        frame.add(categories,BorderLayout.WEST);
-      //  mainPanel.add(b1);
-       // mainPanel.setBackground(Color.blue);
+        categories.setBackground(new Color(78, 0, 0));        //menuPanel.setSize(100,100);
+        frame.add(categories, BorderLayout.WEST);
+        //  mainPanel.add(b1);
+        // mainPanel.setBackground(Color.blue);
 
-        arrayListDownloadBoxes = new ArrayListDownloadBoxes(mainDownloadPanel,categories);
+        arrayListDownloadBoxes = new ArrayListDownloadBoxes(mainDownloadPanel, categories);
         SaveInformation saveInformation = new SaveInformation();
         //File file = new File("list.jdm");
-       saveInformation.readDownloadPanels();
+        saveInformation.readDownloadPanels();
         saveInformation.readSetting();
-        manager = new Manager(mainDownloadPanel,menuPanel,categories);
+        manager = new Manager(mainDownloadPanel, menuPanel, categories);
         manager.setLanguage("English");
 
 
@@ -172,14 +169,12 @@ public class Main {
            e.printStackTrace();
        }
        */
-       //saveInformation.readQueueDownloadPanels();
+        //saveInformation.readQueueDownloadPanels();
 
         // frame.setBackground(Color.red);
 
 
-
         frame.setVisible(true);
-
 
 
     }
